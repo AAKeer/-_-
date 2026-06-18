@@ -45,3 +45,12 @@
 - Verified `GET /api/hot/daily` returned HTTP 200 with `application/json;charset=UTF-8`.
 - Current source results: `baidu` success with 20 items, `bilibili` success with 20 items, `github` success with 16 items.
 - Added explicit UTF-8 charset to JSON API responses.
+
+## 2026-06-18 - Parameterized hot source APIs
+
+- Added query parameter passthrough for `GET /api/hot/source/{source}`.
+- Added Bilibili category support for `all`, `technology`, `game`, and `food` using the ranking v2 API.
+- Added GitHub `since=daily|weekly` support.
+- Added Skills placeholder source returning `success=false` and `暂未接入真实数据源`.
+- Fixed source/service user-facing Chinese messages that were previously mojibake in source files.
+- Verification: `mvn test` passed, 4 tests.

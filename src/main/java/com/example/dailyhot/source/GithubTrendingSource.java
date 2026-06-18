@@ -13,11 +13,12 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class GithubTrendingSource implements HotSource {
 
-    private static final String URL = "https://github.com/trending";
+    private static final String BASE_URL = "https://github.com/trending";
     private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
             + "(KHTML, like Gecko) Chrome/126.0 Safari/537.36";
     private static final ZoneId ZONE = ZoneId.of("Asia/Shanghai");
@@ -34,26 +35,42 @@ public class GithubTrendingSource implements HotSource {
 
     @Override
     public HotSourceResult fetch() {
+        return fetch(Map.of());
+    }
+
+    @Override
+    public HotSourceResult fetch(Map<String, String> params) {
+        String since = normalizeSince(params.get("since"));
+
         try {
-            Document document = Jsoup.connect(URL)
+            Document document = Jsoup.connect(BASE_URL)
+                    .data("since", since)
                     .userAgent(USER_AGENT)
                     .timeout(8000)
                     .get();
 
             List<HotItem> items = parseItems(document);
             if (items.isEmpty()) {
-                return failed("未能从 GitHub Trending 页面解析到项目数据");
+                return failed(since, "未能从 GitHub Trending 页面解析到真实项目数据");
             }
 
             return HotSourceResult.builder()
                     .source(source())
-                    .displayName(displayName())
+                    .displayName(displayNameFor(since))
                     .success(true)
                     .items(items)
                     .build();
         } catch (IOException ex) {
-            return failed("请求 GitHub Trending 失败：" + ex.getMessage());
+            return failed(since, "请求 GitHub Trending 失败：" + ex.getMessage());
         }
+    }
+
+    private String normalizeSince(String since) {
+        if (since == null || since.isBlank()) {
+            return "daily";
+        }
+        String normalized = since.trim().toLowerCase();
+        return normalized.equals("weekly") ? "weekly" : "daily";
     }
 
     private List<HotItem> parseItems(Document document) {
@@ -91,10 +108,14 @@ public class GithubTrendingSource implements HotSource {
         return items;
     }
 
-    private HotSourceResult failed(String message) {
+    private String displayNameFor(String since) {
+        return since.equals("weekly") ? "GitHub 每周热榜" : "GitHub 每日热榜";
+    }
+
+    private HotSourceResult failed(String since, String message) {
         return HotSourceResult.builder()
                 .source(source())
-                .displayName(displayName())
+                .displayName(displayNameFor(since))
                 .success(false)
                 .errorMessage(message)
                 .build();

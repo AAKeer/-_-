@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -50,6 +51,41 @@ class HotAggregationServiceTest {
         ));
 
         assertThat(service.fetchSource("weibo")).isEmpty();
+    }
+
+    @Test
+    void fetchSourcePassesQueryParamsToSource() {
+        HotSource parameterizedSource = new HotSource() {
+            @Override
+            public String source() {
+                return "github";
+            }
+
+            @Override
+            public String displayName() {
+                return "GitHub 热门项目";
+            }
+
+            @Override
+            public HotSourceResult fetch() {
+                return fetch(Map.of());
+            }
+
+            @Override
+            public HotSourceResult fetch(Map<String, String> params) {
+                return HotSourceResult.builder()
+                        .source(source())
+                        .displayName(params.get("since"))
+                        .success(true)
+                        .build();
+            }
+        };
+        HotAggregationService service = new HotAggregationService(List.of(parameterizedSource));
+
+        var result = service.fetchSource("github", Map.of("since", "weekly"));
+
+        assertThat(result).isPresent();
+        assertThat(result.get().getDisplayName()).isEqualTo("weekly");
     }
 
     private HotSource successfulSource(String source, String displayName) {

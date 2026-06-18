@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -35,15 +36,23 @@ public class HotAggregationService {
     }
 
     public Optional<HotSourceResult> fetchSource(String source) {
+        return fetchSource(source, Map.of());
+    }
+
+    public Optional<HotSourceResult> fetchSource(String source, Map<String, String> params) {
         return sources.stream()
                 .filter(candidate -> candidate.source().equalsIgnoreCase(source))
                 .findFirst()
-                .map(this::fetchSafely);
+                .map(candidate -> fetchSafely(candidate, params));
     }
 
     private HotSourceResult fetchSafely(HotSource source) {
+        return fetchSafely(source, Map.of());
+    }
+
+    private HotSourceResult fetchSafely(HotSource source, Map<String, String> params) {
         try {
-            HotSourceResult result = source.fetch();
+            HotSourceResult result = source.fetch(params);
             if (result.getSource() == null) {
                 result.setSource(source.source());
             }

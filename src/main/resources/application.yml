@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: daily-hot-brief
+
+server:
+  port: 8080

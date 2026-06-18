@@ -20,3 +20,11 @@
 - Added GitHub Trending HTML fetcher.
 - Added Bilibili popular JSON fetcher.
 - Verification: `mvn test` passed, 3 tests.
+
+## 2026-06-18 - HTTP APIs
+
+- Added daily aggregation API.
+- Added source-specific API with 404 for unknown sources.
+- Added homepage forward route.
+- Added reserved AI summary endpoint.
+- Verification: `mvn test` passed, 3 tests.

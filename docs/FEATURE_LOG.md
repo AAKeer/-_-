@@ -35,3 +35,13 @@
 - Added refresh interaction and loading state.
 - Added approved calm morning-brief visual style.
 - Verification: `mvn test` passed, 3 tests.
+
+## 2026-06-18 - Runtime verification
+
+- Started the app with `mvn spring-boot:run` on port 8080.
+- Verified `GET /` returned HTTP 200.
+- Verified `GET /app.js` returned HTTP 200.
+- Verified `GET /styles.css` returned HTTP 200.
+- Verified `GET /api/hot/daily` returned HTTP 200 with `application/json;charset=UTF-8`.
+- Current source results: `baidu` success with 20 items, `bilibili` success with 20 items, `github` success with 16 items.
+- Added explicit UTF-8 charset to JSON API responses.

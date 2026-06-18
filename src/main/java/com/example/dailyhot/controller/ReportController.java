@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/report")
+@RequestMapping(value = "/api/report", produces = "application/json;charset=UTF-8")
 public class ReportController {
 
     @GetMapping("/summary")

@@ -54,3 +54,14 @@
 - Added Skills placeholder source returning `success=false` and `暂未接入真实数据源`.
 - Fixed source/service user-facing Chinese messages that were previously mojibake in source files.
 - Verification: `mvn test` passed, 4 tests.
+
+## 2026-06-18 - Platform navigation frontend
+
+- Reworked the existing frontend into a platform navigation home page plus platform detail pages.
+- Removed Vue usage and kept the implementation to plain HTML, CSS, and JavaScript.
+- Kept the approved calm morning-brief visual style, colors, card texture, spacing, and typography.
+- Added detail-page board navigation for Baidu, Bilibili, GitHub, AI industry placeholder, and game community placeholder.
+- Added in-memory frontend cache for loaded boards and refresh for the current board.
+- Added loading, error, empty, placeholder, and success states for the right-side board panel.
+- Verification: `mvn test` passed, 4 tests.
+- Runtime verification on port 8080: home/app.js/styles.css returned 200; baidu 20 items; bilibili all/technology/game/food each 20 items; github daily 16 items; github weekly 20 items; skills all/daily returned `success=false` with 0 items.

@@ -73,14 +73,14 @@ const platforms = {
       {
         id: "skills-all",
         title: "Skills 全时间榜单",
-        description: "预留真实数据源",
+        description: "Skills 全时间安装榜",
         mark: "S",
         endpoint: "/api/hot/source/skills?period=all"
       },
       {
         id: "skills-daily",
         title: "Skills 每日榜单",
-        description: "预留真实数据源",
+        description: "Skills 24h 趋势榜",
         mark: "S",
         endpoint: "/api/hot/source/skills?period=daily"
       }

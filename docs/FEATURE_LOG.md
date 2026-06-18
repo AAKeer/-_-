@@ -78,3 +78,13 @@
 - Scheduled task logs start, Steam top sellers verification result, and GitHub hot list verification result. It does not cache, persist, or enqueue data.
 - Verification: `mvn test` passed, 4 tests.
 - Runtime verification on port 8080: home returned 200; `steam?type=topsellers` returned 20 real items; `steam?type=mostplayed` returned 20 real items; scheduled task emitted its first log after startup.
+
+## 2026-06-18 - Real Skills leaderboard source
+
+- Replaced the Skills placeholder source with real HTML parsing from `https://www.skills.sh/` and `https://www.skills.sh/trending`.
+- `GET /api/hot/source/skills?period=all` now returns the all-time Skills leaderboard.
+- `GET /api/hot/source/skills?period=daily` now returns the 24h trending Skills leaderboard.
+- Kept the same unified `HotSourceResult` and `HotItem` response structure.
+- Updated frontend board descriptions from placeholder text to real Skills leaderboard labels.
+- Verification: `mvn test` passed, 4 tests.
+- Runtime verification on port 8080: `skills?period=all` returned 20 real items; `skills?period=daily` returned 20 real items.

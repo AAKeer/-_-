@@ -65,3 +65,16 @@
 - Added loading, error, empty, placeholder, and success states for the right-side board panel.
 - Verification: `mvn test` passed, 4 tests.
 - Runtime verification on port 8080: home/app.js/styles.css returned 200; baidu 20 items; bilibili all/technology/game/food each 20 items; github daily 16 items; github weekly 20 items; skills all/daily returned `success=false` with 0 items.
+
+## 2026-06-18 - Steam game community and scheduled task
+
+- Added Steam game community support with `topsellers` and `mostplayed` board types.
+- Steam top sellers use the official Steam Store `search/?filter=topsellers` page and parse real result rows.
+- Steam most played uses the official Steam Charts API `ISteamChartsService/GetGamesByConcurrentPlayers/v1/` and Steam Store `appdetails` for game names.
+- Added homepage game community entry text for Steam hot boards.
+- Added browser-local date/time display with one-second updates.
+- Enabled Spring scheduling with `@EnableScheduling`.
+- Added `HotListUpdateTask` using `@Scheduled(fixedRate = 43_200_000, initialDelay = 10_000)` for a lightweight 12-hour verification task.
+- Scheduled task logs start, Steam top sellers verification result, and GitHub hot list verification result. It does not cache, persist, or enqueue data.
+- Verification: `mvn test` passed, 4 tests.
+- Runtime verification on port 8080: home returned 200; `steam?type=topsellers` returned 20 real items; `steam?type=mostplayed` returned 20 real items; scheduled task emitted its first log after startup.

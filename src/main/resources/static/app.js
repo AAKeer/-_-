@@ -103,16 +103,23 @@ const platforms = {
   },
   "game-community": {
     title: "游戏社区",
-    subtitle: "后续可接入游戏社区榜单、讨论趋势和热门内容。",
+    subtitle: "收录 Steam 热销榜、Steam 热玩榜等游戏趋势。",
     mark: "游",
-    defaultBoard: "game-placeholder",
+    defaultBoard: "steam-topsellers",
     boards: [
       {
-        id: "game-placeholder",
-        title: "游戏社区",
-        description: "预留入口",
-        mark: "游",
-        placeholder: true
+        id: "steam-topsellers",
+        title: "Steam 热销榜",
+        description: "Steam 官方热销趋势",
+        mark: "热",
+        endpoint: "/api/hot/source/steam?type=topsellers"
+      },
+      {
+        id: "steam-mostplayed",
+        title: "Steam 热玩榜",
+        description: "Steam 当前在线趋势",
+        mark: "玩",
+        endpoint: "/api/hot/source/steam?type=mostplayed"
       }
     ]
   }
@@ -147,6 +154,7 @@ const elements = {
 
 function init() {
   updateDate();
+  window.setInterval(updateDate, 1000);
   bindEvents();
   showHome();
 }
@@ -172,14 +180,14 @@ function updateDate() {
     day: "numeric",
     weekday: "long"
   }).format(now);
-  const formattedTime = new Intl.DateTimeFormat("zh-CN", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false
-  }).format(now);
+  const formattedTime = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
 
-  elements.currentDate.textContent = formattedDate;
+  elements.currentDate.textContent = `${formattedDate} ${formattedTime}`;
   elements.homeTime.textContent = formattedTime;
+}
+
+function pad(value) {
+  return String(value).padStart(2, "0");
 }
 
 function showHome() {

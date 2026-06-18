@@ -88,3 +88,11 @@
 - Updated frontend board descriptions from placeholder text to real Skills leaderboard labels.
 - Verification: `mvn test` passed, 4 tests.
 - Runtime verification on port 8080: `skills?period=all` returned 20 real items; `skills?period=daily` returned 20 real items.
+
+## 2026-06-19 - Skills current hot board
+
+- Added the third Skills board entry to the GitHub detail page: `Skills 当前热门`.
+- Exposed the existing `GET /api/hot/source/skills?period=hot` support in the frontend board navigation.
+- Renamed the backend display label from `Skills 实时热榜` to `Skills 当前热门` to avoid implying second-level realtime updates.
+- Verification: `mvn test` passed, 4 tests.
+- Runtime verification on port 8080: `skills?period=hot` returned 20 real items.

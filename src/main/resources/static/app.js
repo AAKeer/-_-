@@ -83,6 +83,13 @@ const platforms = {
         description: "Skills 24h 趋势榜",
         mark: "S",
         endpoint: "/api/hot/source/skills?period=daily"
+      },
+      {
+        id: "skills-hot",
+        title: "Skills 当前热门",
+        description: "Skills 当前热度榜",
+        mark: "S",
+        endpoint: "/api/hot/source/skills?period=hot"
       }
     ]
   },

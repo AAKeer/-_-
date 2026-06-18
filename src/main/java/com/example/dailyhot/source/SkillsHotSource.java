@@ -152,7 +152,7 @@ public class SkillsHotSource implements HotSource {
     private String displayNameFor(String period) {
         return switch (period) {
             case "daily" -> "Skills 每日榜单";
-            case "hot" -> "Skills 实时热榜";
+            case "hot" -> "Skills 当前热门";
             default -> "Skills 全时间榜单";
         };
     }

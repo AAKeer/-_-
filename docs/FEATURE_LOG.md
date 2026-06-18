@@ -28,3 +28,10 @@
 - Added homepage forward route.
 - Added reserved AI summary endpoint.
 - Verification: `mvn test` passed, 3 tests.
+
+## 2026-06-18 - Vue frontend
+
+- Added Vue 3 homepage.
+- Added refresh interaction and loading state.
+- Added approved calm morning-brief visual style.
+- Verification: `mvn test` passed, 3 tests.

@@ -13,3 +13,10 @@
 - Added HotSource abstraction and aggregation service.
 - Added tests for all-source and single-source aggregation.
 - Verification: `mvn test` passed, 3 tests.
+
+## 2026-06-18 - Real source fetchers
+
+- Added Baidu hot search HTML fetcher.
+- Added GitHub Trending HTML fetcher.
+- Added Bilibili popular JSON fetcher.
+- Verification: `mvn test` passed, 3 tests.
